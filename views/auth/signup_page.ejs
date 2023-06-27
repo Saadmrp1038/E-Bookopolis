@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <html>
+    <head>
+      <title>Sign Up</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta charset="utf-8" />
+      <link rel="stylesheet" type="text/css" href="css/signup_style.css" />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      />
+      <link
+        href="https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600"
+        rel="stylesheet"
+        type="text/css"
+      />
+      <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    </head>
+
+    <body class="body">
+
+      <div class="login-page">
+        <div class="form">
+          <h2>E-bookopolis</h2>
+          <form class="login-form" action="/auth/new_account" method="POST">
+            <lottie-player src="https://assets10.lottiefiles.com/temp/lf20_aKAfIn.json"  background="transparent"  speed="1"  style="justify-content: center;" loop  autoplay></lottie-player>
+            <input type="text" placeholder="Username" name="usernameSignUp" required/>
+            <input type="text" placeholder="Email address" name="emailSignUp" required/>
+            <input type="password" id="password" placeholder="Set a password" name="passwordSignUp" required/>
+            <select name="genderSignUp" required>
+                  <option value="" disabled selected>Select your option</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+            </select>
+            <input type="text" placeholder="Mobile Number" name="mobileSignUp" required/>
+            <input type="text" placeholder="Delivary Address" name="addressSignUp" required/>
+            <i class="fas fa-eye" onclick="show()"></i>
+            <br>
+            <br>
+            <button type="submit"> SIGN UP </button>
+          </form>
+
+          <form class="login-form" action="/auth/login" method="POST">
+            <button type="submit">
+              BACK
+            </button>
+          </form>
+
+        </div>
+      </div>
+    </body>
+    <script>
+      function show() {
+        var password = document.getElementById("password");
+        var icon = document.querySelector(".fas");
+
+        // ========== Checking type of password ===========
+        if (password.type === "password") {
+          password.type = "text";
+        } else {
+          password.type = "password";
+        }
+      }
+      if(<%=alert%>===3){
+        swal("Oops","User Name Is Already In Use","error")
+      }
+    </script>
+  </html>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>E-bookopolis</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/admin_author_style.css" rel="stylesheet" />
+        <link href="css/admin_common_style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="menu-bar">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#!">E-bookopolis</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <form class="nav-link" action="/admin/home" method="POST">
+                            <button class="btn btn-outline-dark menu-button" type="submit">
+                              Home
+                            </button>
+                        </form>
+                       <li class="nav-item">
+                               <form class="nav-link" action="/admin/author" method="POST">
+                                    <button class="btn btn-outline-dark menu-button" type="submit">
+                                     Authors
+                                    </button>
+                               </form>
+                           </li>
+                        <li class="nav-item">
+                            <form class="nav-link" action="/admin/publisher" method="POST">
+                                <button class="btn btn-outline-dark menu-button" type="submit">
+                                     Publishers
+                                </button>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <form class="nav-link" action="/admin/addBook_page" method="POST">
+                                <button class="btn btn-outline-dark menu-button" type="submit">
+                                     Add Book
+                                </button>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <form class="nav-link" action="/admin/addAuthor_page" method="POST">
+                                <button class="btn btn-outline-dark menu-button" type="submit">
+                                     Add Author
+                                </button>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <form class="nav-link" action="/admin/addPublisher_page" method="POST">
+                                <button class="btn btn-outline-dark menu-button" type="submit">
+                                     Add Publisher
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                    <div class="greeting">Hello, <%=username %></div>
+                    <form class="nav-link" action="/user/logout" method="POST">
+                        <button class="btn btn-outline-dark menu-button" type="submit">
+                         Log Out
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        </div>
+        <!-- Header-->
+        <header class="bg-dark banner">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">E-bookoplois</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">A Utopia Of Books</p>
+                </div>
+            </div>
+        </header>
+        <div style="text-align: center; font-size: 50px;">Publishers</div>
+        <!-- Section-->
+            <div class="card-container">
+            <% for (var i = 0; i < data.rows.length; i++) { %> 
+             <div class="container cart">
+                <!-- row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4  -->
+                    <div class="card ">
+                        <!-- Product image-->
+                        <form action="/admin/publisher_details" method="POST" align="center">
+                            <input type="hidden" name="PublisherID" value= "<%=data.rows[i][0]%>" />
+                            <input type="hidden" name="PublisherName" value= "<%=data.rows[i][1]%>" />
+                            <button class="image-button" type="submit">
+                                <img class="card-img-top" src="../user/assets/publishers/<%= data.rows[i][0]%>.jpg" alt="No Image Found" onerror=this.src="https://picsum.photos/200/300" />
+                            </button>
+                        </form>
+                        <!-- Product details-->
+                        <div class="card-body ">
+                            <div class="text-center"  style="height: 50px;">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder"> <%= data.rows[i][1] %></h5>
+                                <!-- Product price-->
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <!-- <div class="card-body">
+                                <div class="card-details" style="height: 500px;">
+                                    <div style="text-align:left">Summary:</div>
+                                     <div style="text-align:justify;"><%= data.rows[i][2] %></div>
+                                </div>
+                        </div> -->
+                        <div class="card-footer bg-transparent">
+                            <div class="text-center card-button">
+                            <form action="/admin/publisher_details" method="POST">
+                                <input type="hidden" name="PublisherID" value= "<%=data.rows[i][0]%>" />
+                                <input type="hidden" name="PublisherName" value= "<%=data.rows[i][1]%>" />
+                                <div class="text-center"><button class="btn btn-outline-dark" type="submit">
+                                    Details
+                                </button></div>
+                            </form>
+                            <form action="/admin/removePublisher" method="POST">
+                                <input type="hidden" name="PublisherID" value= "<%=data.rows[i][0]%>" />
+                                <input type="hidden" name="PublisherName" value= "<%=data.rows[i][1]%>" />
+                                <div class="text-center"><button class="btn btn-outline-dark" type="submit">
+                                    Remove
+                                </button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>      
+            <% } %>
+        </div> 
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <!-- Core theme JS-->
+        <!-- <script src="js/scripts.js"></script> -->
+        <script type="text/javascript">          
+            document.addEventListener("DOMContentLoaded", function (event) {
+                var scrollpos = sessionStorage.getItem('scrollpos');
+                if (scrollpos) {
+                    window.scrollTo(0, scrollpos);
+                    sessionStorage.removeItem('scrollpos');
+                }
+            });
+
+            window.addEventListener("beforeunload", function (e) {
+                sessionStorage.setItem('scrollpos', window.scrollY);
+            });
+        </script>
+
+    </body>
+</html>

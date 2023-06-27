@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "ejs-lint": "^1.2.2",
+    "express": "^4.18.1",
+    "express-pjax": "^0.0.1",
+    "express-session": "^1.17.3",
+    "jspdf": "^2.5.1",
+    "jspdf-invoice-template": "^1.4.3",
+    "oracledb": "^5.4.0",
+    "swal": "^0.1.0",
+    "sweetalert": "^2.1.2"
+  }
+}

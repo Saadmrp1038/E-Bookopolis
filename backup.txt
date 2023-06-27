@@ -1,0 +1,28 @@
+<div style="text-align: center; font-size: 50px;">Comments</div>
+            <div style="margin-bottom: 25px;"></div>
+
+            <% for (var i = 0; i < reviewData.rows.length; i++) { %> 
+
+            <% var date = reviewData.rows[i][3] %>
+            <% var dd = String(date.getDate()).padStart(2, '0') %>
+            <% var mm = String(date.getMonth() + 1).padStart(2, '0') %>
+            <% var yyyy = date.getFullYear() %>
+            <% var h = String(date.getHours()).padStart(2, '0') %>
+            <% var m = String(date.getMinutes()).padStart(2, '0') %>
+            <% var s = String(date.getHours()).padStart(2, '0') %>
+            <% date = dd + '/' + mm + '/' + yyyy + '  ' + h + ':' + m + ':' +s %>
+
+            <div class="review-box">
+                <div class="review-heading">
+                    <div class="review-heading-text">
+                        <%= date %>   
+                    </div>
+                </div>
+                <div class="review-main">
+                    <div class="review-user"><%= reviewData.rows[i][2] %></div>
+                    <div class="review-main-text">
+                    <%= reviewData.rows[i][5] %>
+                    </div>
+                </div>            
+            </div>
+            <% } %>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>E-bookopolis</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>  
+        <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/order_history_style.css" rel="stylesheet" />
+        <link href="css/common_style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <div class="menu-bar">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#!">E-bookopolis</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <form class="nav-link" action="/user/home" method="POST">
+                            <button class="btn btn-outline-dark menu-button" type="submit">
+                              Home
+                            </button>
+                        </form>
+                       <li class="nav-item">
+                           <form class="nav-link" action="/user/order_history" method="POST">
+                                <button class="btn btn-outline-dark menu-button" type="submit">
+                                 Order History
+                                </button>
+                           </form>
+                       </li>
+                       <li class="nav-item">
+                           <form class="nav-link" action="/user/author" method="POST">
+                                <button class="btn btn-outline-dark menu-button" type="submit">
+                                 Authors
+                                </button>
+                           </form>
+                        </li>
+                        <li class="nav-item">
+                            <form class="nav-link" action="/user/publisher" method="POST">
+                                <button class="btn btn-outline-dark menu-button" type="submit">
+                                     Publishers
+                                </button>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                               <form class="nav-link" action="/user/blog" method="POST">
+                                    <button class="btn btn-outline-dark menu-button" type="submit">
+                                     Blog
+                                    </button>
+                               </form>
+                        </li>
+                    </ul>
+                    <form class="d-flex" action="/user/user_profile" method="POST">
+                            <button style="border: none; background: none;" type="submit">
+                                <div class="greeting">Hello, <%=username %></div>
+                            </button>
+                    </form>
+                    <form class="d-flex" action="/user/cart" method="POST">
+                        <button class="btn btn-outline-dark menu-button" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill"><%=cartAmount%></span>
+                        </button>
+                    </form>
+                    <form class="nav-link" action="/user/wishlist" method="POST">
+                            <button class="btn btn-outline-dark menu-button" type="submit">
+                             <i class="fa-solid fa-heart"></i>
+                             <span class="badge bg-dark text-white ms-1 rounded-pill"><%=wishlistAmount%></span>
+                            </button>
+                    </form>
+                    <form class="nav-link" action="/user/search_page" method="POST" style="padding:0 0 0 0;">
+                            <button class="btn btn-outline-dark menu-button" type="submit">
+                             <i class="fas fa-search"></i>
+                            </button>
+                    </form>
+                    <form class="nav-link" action="/user/logout" method="POST">
+                        <button class="btn btn-outline-dark menu-button" type="submit">
+                         Log Out
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        </div>
+        <!-- Header-->
+        <header class="bg-dark banner">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">E-bookopolis</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">A Utopia Of Books</p>
+                </div>
+            </div>
+        </header>
+        <div style="text-align: center; font-size: 50px;">Order History</div>
+        <!-- Section-->
+        <div class="order-history-table">
+            <div class="order-history-item" style="background: #D3D3D3;">OrderID</div>
+            <div class="order-history-item" style="background: #D3D3D3;">Unique Books Purchased</div>
+            <div class="order-history-item" style="background: #D3D3D3;">Total Books Purchased</div>
+            <div class="order-history-item" style="background: #D3D3D3;">Total Price</div>
+            <div class="order-history-item" style="background: #D3D3D3;">Delivary Address</div>
+            <div class="order-history-item" style="background: #D3D3D3;">Purchase Date</div>
+            <div class="order-history-item" style="background: #D3D3D3;">Order Details</div>
+
+            <% var sum=0 %>
+            <% var totalAmount=0 %>
+            <% var uniqueAmount=0 %>
+            <% for (var i = 0; i < data.rows.length; i++) { %>
+
+            <% uniqueAmount++ %>    
+            <% totalAmount+=data.rows[i][5] %>
+            <% sum+=data.rows[i][5]*data.rows[i][7] %>
+
+            <% if (i!=data.rows.length-1 &&  data.rows[i][0]!=data.rows[i+1][0]) { %>
+
+            <% var date = data.rows[i][10] %>
+            <% var dd = String(date.getDate()).padStart(2, '0') %>
+            <% var mm = String(date.getMonth() + 1).padStart(2, '0') %>
+            <% var yyyy = date.getFullYear() %>
+            <% var h = String(date.getHours()).padStart(2, '0') %>
+            <% var m = String(date.getMinutes()).padStart(2, '0') %>
+            <% var s = String(date.getHours()).padStart(2, '0') %>
+            <% date = dd + '/' + mm + '/' + yyyy + '  ' + h + ':' + m + ':' +s %>
+
+            <div class="order-history-item"><%=data.rows[i][0]%></div>
+            <div class="order-history-item"><%=uniqueAmount %> </div>
+            <div class="order-history-item"><%=totalAmount%></div>
+            <div class="order-history-item"><%=sum%>$</div>
+            <div class="order-history-item"><%=data.rows[i][6]%></div>
+            <div class="order-history-item"><%=date%> </div>
+            <div class="order-history-item">
+                <form action="/user/order_history_details" method="POST">
+                    <input type="hidden" name="orderID" value= <%=data.rows[i][0]%> />
+                    <div class="text-center"><button class="btn btn-outline-dark" type="submit">
+                        Details
+                    </button></div>
+                </form>
+            </div>
+             <% sum=0 %>
+             <% totalAmount=0 %>
+             <% uniqueAmount=0 %>
+
+             <% } %>
+            <% } %>
+            <%i=data.rows.length-1%>
+            <% if(i>=0){ %> 
+            <% var date = data.rows[i][10] %>
+            <% var dd = String(date.getDate()).padStart(2, '0') %>
+            <% var mm = String(date.getMonth() + 1).padStart(2, '0') %>
+            <% var yyyy = date.getFullYear() %>
+            <% var h = String(date.getHours()).padStart(2, '0') %>
+            <% var m = String(date.getMinutes()).padStart(2, '0') %>
+            <% var s = String(date.getHours()).padStart(2, '0') %>
+            <% date = dd + '/' + mm + '/' + yyyy + '  ' + h + ':' + m + ':' +s %>
+            <div class="order-history-item"><%=data.rows[i][0]%></div>
+            <div class="order-history-item"><%=uniqueAmount %> </div>
+            <div class="order-history-item"><%=totalAmount%></div>
+            <div class="order-history-item"><%=sum%>$</div>
+            <div class="order-history-item"><%=data.rows[i][6]%></div>
+            <div class="order-history-item"><%=date%> </div>
+            <div class="order-history-item">
+                <form action="/user/order_history_details" method="POST">
+                    <input type="hidden" name="orderID" value= <%=data.rows[i][0]%> />
+                    <div class="text-center"><button class="btn btn-outline-dark" type="submit">
+                        Details
+                    </button></div>
+                </form>
+            </div>
+            <% } %>
+        </div>
+
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <!-- Core theme JS-->
+        <!-- <script src="js/scripts.js"></script> -->
+        <script type="text/javascript">          
+            document.addEventListener("DOMContentLoaded", function (event) {
+                var scrollpos = sessionStorage.getItem('scrollpos');
+                if (scrollpos) {
+                    window.scrollTo(0, scrollpos);
+                    sessionStorage.removeItem('scrollpos');
+                }
+            });
+
+            window.addEventListener("beforeunload", function (e) {
+                sessionStorage.setItem('scrollpos', window.scrollY);
+            });
+        </script>
+
+    </body>
+</html>
